@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data"
+    restart: always
+  
+  flask-api:
+    build:
+      context: ./flask
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_PORT=5000
+      - POSTGRES_DATABASE_URL=postgres
+      - POSTGRES_DATABASE_NAME=postgres
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_CONNECTION_PORT=5432
+    depends_on:
+      - postgres
+    restart: always
+
+  bot:
+    build:
+      context: ./bot_aio
+    environment:
+      - FLASK_IP_ADDRESS=flask-api
+      - FLASK_PORT=5000
+      - BOT_TOKEN=Enter_your_API_key
+    depends_on:
+      - flask-api
+    restart: always
+volumes:
+  db-data:
