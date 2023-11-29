@@ -1,6 +1,9 @@
 import os
 import psycopg2
 from PostgreSQL import *
+from dotenv import load_dotenv
+
+load_dotenv()
 
 POSTGRES_DATABASE_URL = os.getenv("POSTGRES_DATABASE_URL")
 POSTGRES_DATABASE_NAME = os.getenv("POSTGRES_DATABASE_NAME")

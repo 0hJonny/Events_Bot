@@ -1,4 +1,4 @@
-FROM python:3.11-bookworm
+FROM python:3.11-alpine
 LABEL authors="ЭБИТ"
 
 WORKDIR /usr/src/app
